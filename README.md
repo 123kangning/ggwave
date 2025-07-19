@@ -150,7 +150,7 @@ Other projects using **ggwave** or one of its prototypes:
 
 ```bash
 # build
-git clone git@github.com:123kangning/ggwave.git --recursive
+git clone https://github.com/123kangning/ggwave.git --recursive
 cd ggwave && mkdir build && cd build
 cmake ..
 make
