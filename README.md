@@ -150,7 +150,7 @@ Other projects using **ggwave** or one of its prototypes:
 
 ```bash
 # build
-git clone https://github.com/ggerganov/ggwave --recursive
+git clone git@github.com:123kangning/ggwave.git --recursive
 cd ggwave && mkdir build && cd build
 cmake ..
 make
@@ -164,7 +164,7 @@ make
 Build reproducible `libggwave-dev` and `python3-ggwave` Debian packages:
 ```bash
 # Fetch source
-git clone https://github.com/ggerganov/ggwave --recursive
+git clone git@github.com:123kangning/ggwave.git --recursive
 cd ggwave
 
 # Configure
@@ -180,7 +180,7 @@ sudo dpkg -i dist/*.deb
 ### Emscripten
 
 ```bash
-git clone https://github.com/ggerganov/ggwave --recursive
+git clone git@github.com:123kangning/ggwave.git --recursive
 cd ggwave
 mkdir build && cd build
 emcmake cmake ..
