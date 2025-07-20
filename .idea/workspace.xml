@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="BackendCodeEditorMiscSettings">
-    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="14" type="long" />
+    <option name="/Default/Environment/Hierarchy/GeneratedFilesCacheKey/Timestamp/@EntryValue" value="33" type="long" />
     <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
     <option name="/Default/Housekeeping/GlobalSettingsUpgraded/IsUpgraded/@EntryValue" value="true" type="bool" />
     <option name="/Default/RiderDebugger/RiderRestoreDecompile/RestoreDecompileSetting/@EntryValue" value="false" type="bool" />
@@ -28,48 +28,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="837ecdb3-6be2-4aad-8992-441e1d53ada8" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/bindings/ios" beforeDir="false" afterPath="$PROJECT_DIR$/bindings/ios" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/.github/workflows/swift.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Makefile-tmpl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Package.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/fft.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/ggwave.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/include/ggwave/ggwave.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/reed-solomon/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/reed-solomon/gf.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/reed-solomon/poly.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/reed-solomon/rs.hpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/resampler.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/ggwave/resampler.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/test-objc/main.m" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/Sources/test-swift/main.swift" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bindings/ios/publish-trigger" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock" beforeDir="false" afterPath="$PROJECT_DIR$/examples/third-party/ggsock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/cmake/BuildTypes.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/cmake/GitVars.cmake" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/include/ggsock/common.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/include/ggsock/communicator.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/include/ggsock/file-server.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/include/ggsock/serialization.h" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/src/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/src/communicator.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/src/file-server.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/src/serialization.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tests/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tests/test0.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tools/CMakeLists.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tools/test-client.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tools/test-file-client.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tools/test-file-server.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tools/test-server.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tools/test_client.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/third-party/ggsock/tools/test_server.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/examples/third-party/imgui/imgui" beforeDir="false" afterPath="$PROJECT_DIR$/examples/third-party/imgui/imgui" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +44,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -102,28 +64,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.RadMigrateCodeStyle": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "RunOnceActivity.west.config.association.type.startup.service": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "/Users/wangkangning/room_find/ggwave",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.west.config.association.type.startup.service&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/wangkangning/room_find/ggwave&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
       <changelist id="837ecdb3-6be2-4aad-8992-441e1d53ada8" name="更改" comment="" />
