@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.0...10.0)
 project(ggwave VERSION 0.4.2)
 
 set(GGWAVE_VERSION_PYTHON 0.4.2)
