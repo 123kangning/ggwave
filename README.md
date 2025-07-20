@@ -148,7 +148,7 @@ Other projects using **ggwave** or one of its prototypes:
 
 ```bash
 # build
-git clone https://github.com/ggerganov/ggwave --recursive
+git clone https://github.com/123kangning/ggwave --recursive
 cd ggwave && mkdir build && cd build
 cmake ..
 make
