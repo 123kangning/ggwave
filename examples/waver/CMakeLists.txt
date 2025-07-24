@@ -30,6 +30,38 @@ if (EMSCRIPTEN)
 else()
     add_executable(${TARGET} main.cpp common.cpp interface.cpp interface-unix.cpp)
 
+    if(WIN32 AND GGWAVE_SUPPORT_SDL2)
+        # 获取编译器路径
+        get_filename_component(MINGW_BIN_DIR ${CMAKE_CXX_COMPILER} DIRECTORY)
+
+        # 需要复制的运行时库列表
+        set(MINGW_RUNTIME_DLLS
+                libgcc_s_seh-1.dll
+                libstdc++-6.dll
+                libwinpthread-1.dll
+        )
+
+        # 复制SDL2.dll
+        get_target_property(SDL2_LIB_PATH SDL2::SDL2 LOCATION)
+        get_filename_component(SDL2_DLL_DIR "${SDL2_LIB_PATH}" DIRECTORY)
+        add_custom_command(TARGET ${TARGET} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy
+                "${SDL2_DLL_DIR}/SDL2.dll"
+                "$<TARGET_FILE_DIR:${TARGET}>"
+                COMMENT "Copying SDL2.dll"
+        )
+
+        # 复制MinGW运行时DLL
+        foreach(DLL_NAME IN LISTS MINGW_RUNTIME_DLLS)
+            add_custom_command(TARGET ${TARGET} POST_BUILD
+                    COMMAND ${CMAKE_COMMAND} -E copy
+                    "${MINGW_BIN_DIR}/${DLL_NAME}"
+                    "$<TARGET_FILE_DIR:${TARGET}>"
+                    COMMENT "Copying ${DLL_NAME}"
+            )
+        endforeach()
+    endif()
+
     target_include_directories(${TARGET} PRIVATE
         ..
         ${SDL2_INCLUDE_DIRS}

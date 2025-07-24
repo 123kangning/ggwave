@@ -23,11 +23,11 @@ if (GGWAVE_SUPPORT_SDL2)
     endif()
 
     if (NOT EMSCRIPTEN)
-        # 判断是否为 Windows 环境
+        # 判断是否为 Windows 平台
         if(WIN32)
-            # 设置寻找 SDL2 静态链接库
-            set(SDL2_STATIC ON)
-            set(SDL2_SHARED OFF)
+            # 设置查找 SDL2 静态库
+            set(SDL2_STATIC ON CACHE BOOL "Force static SDL2 libraries" FORCE)
+            set(SDL2_SHARED OFF CACHE BOOL "Disable shared SDL2 libraries" FORCE)
         endif()
 
         find_package(SDL2)
