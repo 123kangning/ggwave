@@ -519,7 +519,7 @@ public:
 
 #ifndef GGWAVE_CONFIG_FEW_PROTOCOLS
                 protocols.data[GGWAVE_PROTOCOL_AUDIBLE_NORMAL]     = { GGWAVE_PSTR("Normal"),       40,  9, 3, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_AUDIBLE_FAST]       = { GGWAVE_PSTR("Fast"),         40,  6, 3, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_AUDIBLE_FAST]       = { GGWAVE_PSTR("Fast"),         427,  6, 3, 1, true, };
                 protocols.data[GGWAVE_PROTOCOL_AUDIBLE_FASTEST]    = { GGWAVE_PSTR("Fastest"),      40,  3, 3, 1, true, };
                 protocols.data[GGWAVE_PROTOCOL_ULTRASOUND_NORMAL]  = { GGWAVE_PSTR("[U] Normal"),   320, 9, 3, 1, true, };
                 protocols.data[GGWAVE_PROTOCOL_ULTRASOUND_FAST]    = { GGWAVE_PSTR("[U] Fast"),     320, 6, 3, 1, true, };

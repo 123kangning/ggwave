@@ -23,6 +23,13 @@ if (GGWAVE_SUPPORT_SDL2)
     endif()
 
     if (NOT EMSCRIPTEN)
+        # 判断是否为 Windows 环境
+        if(WIN32)
+            # 设置寻找 SDL2 静态链接库
+            set(SDL2_STATIC ON)
+            set(SDL2_SHARED OFF)
+        endif()
+
         find_package(SDL2)
 
         if (NOT USE_FINDSDL2 AND NOT SDL2_FOUND)
