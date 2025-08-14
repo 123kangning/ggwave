@@ -1,4 +1,5 @@
 # dependencies
+cmake_minimum_required(VERSION 3.0...10.0)
 
 find_package(Threads REQUIRED)
 
@@ -117,6 +118,8 @@ if (GGWAVE_SUPPORT_SDL2)
 
         add_subdirectory(ggwave-rx)
         add_subdirectory(ggwave-cli)
+        add_subdirectory(krooms-server)
+        add_subdirectory(krooms-client)
     endif()
 
     add_subdirectory(waver)

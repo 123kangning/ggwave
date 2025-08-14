@@ -96,14 +96,12 @@ bool GGWave_init(
 
         {
             int nDevices = SDL_GetNumAudioDevices(SDL_FALSE);
-            printf("Found %d playback devices:\n", nDevices);
             for (int i = 0; i < nDevices; i++) {
                 printf("    - Playback device #%d: '%s'\n", i, SDL_GetAudioDeviceName(i, SDL_FALSE));
             }
         }
         {
             int nDevices = SDL_GetNumAudioDevices(SDL_TRUE);
-            printf("Found %d capture devices:\n", nDevices);
             for (int i = 0; i < nDevices; i++) {
                 printf("    - Capture device #%d: '%s'\n", i, SDL_GetAudioDeviceName(i, SDL_TRUE));
             }
@@ -169,7 +167,13 @@ bool GGWave_init(
 
         if (captureId >= 0) {
             printf("Attempt to open capture device %d : '%s' ...\n", captureId, SDL_GetAudioDeviceName(captureId, SDL_TRUE));
+            // printf("\n-0\n");
+            // printf("captureId=%d,SDL_TRUE=%d\n",captureId,SDL_TRUE);
+            // printf("SDL_GetAudioDeviceName(captureId, SDL_TRUE)=%s\n",SDL_GetAudioDeviceName(captureId, SDL_TRUE));
+            // printf("captureSpec=%d\n",captureSpec);
+            // printf("g_obtainedSpecInp=%d\n",g_obtainedSpecInp);
             g_devIdInp = SDL_OpenAudioDevice(SDL_GetAudioDeviceName(captureId, SDL_TRUE), SDL_TRUE, &captureSpec, &g_obtainedSpecInp, 0);
+            // printf("\n-0.1\n");
         } else {
             printf("Attempt to open default capture device ...\n");
             g_devIdInp = SDL_OpenAudioDevice(g_defaultCaptureDeviceName.empty() ? nullptr : g_defaultCaptureDeviceName.c_str(),
@@ -188,7 +192,6 @@ bool GGWave_init(
             reinit = true;
         }
     }
-
     GGWave::SampleFormat sampleFormatInp = GGWAVE_SAMPLE_FORMAT_UNDEFINED;
     GGWave::SampleFormat sampleFormatOut = GGWAVE_SAMPLE_FORMAT_UNDEFINED;
 
@@ -210,7 +213,6 @@ bool GGWave_init(
         case AUDIO_F32SYS:  sampleFormatOut = GGWAVE_SAMPLE_FORMAT_F32; break;
             break;
     }
-
     if (reinit) {
         GGWave::OperatingMode mode = GGWAVE_OPERATING_MODE_RX_AND_TX;
         if (useDSS) mode |= GGWAVE_OPERATING_MODE_USE_DSS;
@@ -227,7 +229,6 @@ bool GGWave_init(
             mode,
         });
     }
-
     return true;
 }
 
@@ -238,10 +239,12 @@ void GGWave_reset(void * parameters) {
 }
 
 bool GGWave_mainLoop() {
+    //printf("g_devIdInp = %d, g_devIdOut = %d\n", g_devIdInp, g_devIdOut);
     if (g_devIdInp == 0 && g_devIdOut == 0) {
         return false;
     }
 
+    //printf("g_ggWave->txHasData() = %d\n", g_ggWave->txHasData());
     if (g_ggWave->txHasData() == false) {
         SDL_PauseAudioDevice(g_devIdOut, SDL_FALSE);
 

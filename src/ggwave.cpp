@@ -818,6 +818,7 @@ uint32_t GGWave::encode() {
     {
         int frameId = 0;
         bool hasData = m_tx.hasData;
+        // printf("encode 0 hasData = %d\n", hasData);
 
         m_tx.nTones = 0;
         while (hasData) {
@@ -915,6 +916,7 @@ uint32_t GGWave::encode() {
     uint32_t offset = 0;
     const float factor = m_sampleRate/m_sampleRateOut;
 
+    // printf("encode 1 hasData = %d\n", m_tx.hasData);
     while (m_tx.hasData) {
         m_tx.output.zero();
 
