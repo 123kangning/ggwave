@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     const auto argm          = parseCmdArguments(argc, argv);
     const int  captureId     = argm.count("c") == 0 ?  0 : std::stoi(argm.at("c"));
     const int  playbackId    = argm.count("p") == 0 ?  0 : std::stoi(argm.at("p"));
-    const int  txProtocolId  = argm.count("t") == 0 ?  1 : std::stoi(argm.at("t"));
+    const int  txProtocolId  = argm.count("t") == 0 ?  4 : std::stoi(argm.at("t"));
     const int  payloadLength = argm.count("l") == 0 ? -1 : std::stoi(argm.at("l"));
     const bool useDSS        = argm.count("d") >  0;
     const bool printTones    = argm.count("v") >  0;

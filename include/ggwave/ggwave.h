@@ -44,6 +44,7 @@ extern "C" {
 #ifndef GGWAVE_CONFIG_FEW_PROTOCOLS
         GGWAVE_PROTOCOL_AUDIBLE_NORMAL,
         GGWAVE_PROTOCOL_AUDIBLE_FAST,
+        // GGWAVE_PROTOCOL_AUDIBLE_FAST2,
         GGWAVE_PROTOCOL_AUDIBLE_FASTEST,
         GGWAVE_PROTOCOL_ULTRASOUND_NORMAL,
         GGWAVE_PROTOCOL_ULTRASOUND_FAST,
@@ -448,7 +449,7 @@ public:
         int16_t freqStart;   // FFT bin index of the lowest frequency
         int8_t  framesPerTx; // number of frames to transmit a single chunk of data
         int8_t  bytesPerTx;  // number of bytes in a chunk of data
-        int8_t  extra;       // 2 if this is a mono-tone protocol, 1 otherwise
+        int8_t  extra;       // 2 if this is a mono-tone protocol单音调, 1 otherwise多音调
 
         bool enabled;
 
@@ -518,19 +519,19 @@ public:
 #endif
 
 #ifndef GGWAVE_CONFIG_FEW_PROTOCOLS
-                protocols.data[GGWAVE_PROTOCOL_AUDIBLE_NORMAL]     = { GGWAVE_PSTR("Normal"),       40,  9, 3, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_AUDIBLE_FAST]       = { GGWAVE_PSTR("Fast"),         427,  6, 3, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_AUDIBLE_FASTEST]    = { GGWAVE_PSTR("Fastest"),      40,  3, 3, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_ULTRASOUND_NORMAL]  = { GGWAVE_PSTR("[U] Normal"),   320, 9, 3, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_ULTRASOUND_FAST]    = { GGWAVE_PSTR("[U] Fast"),     320, 6, 3, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_ULTRASOUND_FASTEST] = { GGWAVE_PSTR("[U] Fastest"),  320, 3, 3, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_AUDIBLE_NORMAL]     = { GGWAVE_PSTR("Normal"),       416,  9, 3, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_AUDIBLE_FAST]       = { GGWAVE_PSTR("Fast"),         416,  6, 3, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_AUDIBLE_FASTEST]    = { GGWAVE_PSTR("Fastest"),      416,  3, 3, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_ULTRASOUND_NORMAL]  = { GGWAVE_PSTR("[U] Normal"),   416,  9, 3, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_ULTRASOUND_FAST]    = { GGWAVE_PSTR("[U] Fast"),     40,  6, 3, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_ULTRASOUND_FASTEST] = { GGWAVE_PSTR("[U] Fastest"),  416,  3, 3, 1, true, };
 #endif
-                protocols.data[GGWAVE_PROTOCOL_DT_NORMAL]          = { GGWAVE_PSTR("[DT] Normal"),  24,  9, 1, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_DT_FAST]            = { GGWAVE_PSTR("[DT] Fast"),    24,  6, 1, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_DT_FASTEST]         = { GGWAVE_PSTR("[DT] Fastest"), 24,  3, 1, 1, true, };
-                protocols.data[GGWAVE_PROTOCOL_MT_NORMAL]          = { GGWAVE_PSTR("[MT] Normal"),  24,  9, 1, 2, true, };
-                protocols.data[GGWAVE_PROTOCOL_MT_FAST]            = { GGWAVE_PSTR("[MT] Fast"),    24,  6, 1, 2, true, };
-                protocols.data[GGWAVE_PROTOCOL_MT_FASTEST]         = { GGWAVE_PSTR("[MT] Fastest"), 24,  3, 1, 2, true, };
+                protocols.data[GGWAVE_PROTOCOL_DT_NORMAL]          = { GGWAVE_PSTR("[DT] Normal"),  416,  9, 2, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_DT_FAST]            = { GGWAVE_PSTR("[DT] Fast"),    416,  6, 2, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_DT_FASTEST]         = { GGWAVE_PSTR("[DT] Fastest"), 416,  3, 2, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_MT_NORMAL]          = { GGWAVE_PSTR("[MT] Normal"),  416,  9, 1, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_MT_FAST]            = { GGWAVE_PSTR("[MT] Fast"),    416,  6, 1, 1, true, };
+                protocols.data[GGWAVE_PROTOCOL_MT_FASTEST]         = { GGWAVE_PSTR("[MT] Fastest"), 416,  6, 1, 1, true, };
 
 #undef GGWAVE_PSTR
                 initialized = true;
