@@ -1,0 +1,28 @@
+{
+  "main": "lib/binding.js",
+  "dependencies": {
+    "node-addon-api": "^8.5.0"
+  },
+  "scripts": {
+    "test": "node --napi-modules ./test/test_binding.js"
+  },
+  "gypfile": true,
+  "name": "ggwave",
+  "description": "[![Actions Status](https://github.com/ggerganov/ggwave/workflows/CI/badge.svg)](https://github.com/ggerganov/ggwave/actions) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![ggwave badge][changelog-badge]][changelog] [![pypi](https://img.shields.io/pypi/v/ggwave.svg)](https://pypi.org/project/ggwave/) [![npm](https://img.shields.io/npm/v/ggwave.svg)](https://www.npmjs.com/package/ggwave/)",
+  "version": "1.0.0",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/123kangning/ggwave.git"
+  },
+  "author": "kangning",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/123kangning/ggwave/issues"
+  },
+  "homepage": "https://github.com/123kangning/ggwave#readme"
+}
