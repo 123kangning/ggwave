@@ -52,7 +52,7 @@ Napi::Value KroomsClientWrapper::Start(const Napi::CallbackInfo & info) {
 Napi::Value KroomsClientWrapper::Stop(const Napi::CallbackInfo & info) {
     Napi::Env env = info.Env();
     client.stop();
-    return Napi::Number::New(env, ret);
+    return Napi::Number::New(env, 0);
 }
 
 Napi::Function KroomsClientWrapper::GetClass(Napi::Env env) {

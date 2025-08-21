@@ -1734,7 +1734,7 @@ void GGWave::decode_variable() {
                             }
 
                             ggprintf("Decoded length = %d, protocol = '%s' (%d)\n", decodedLength, protocol.name, protocolId);
-                            ggprintf("Received sound data successfully: '%s'\n", m_rx.data.data());
+                            //ggprintf("Received sound data successfully: '%s'\n", m_rx.data.data());
 
                             isValid = true;
                             m_rx.hasNewRxData = true;
@@ -2030,7 +2030,7 @@ void GGWave::decode_fixed() {
                 }
 
                 ggprintf("Decoded length = %d, protocol = '%s' (%d)\n", m_payloadLength, protocol.name, protocolId);
-                ggprintf("Received sound data successfully: '%s'\n", m_rx.data.data());
+                //ggprintf("Received sound data successfully: '%s'\n", m_rx.data.data());
 
                 isValid = true;
                 m_rx.hasNewRxData = true;

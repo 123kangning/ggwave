@@ -3,7 +3,7 @@
 KRoomClient client;
 
 void signalHandler(int signum) {
-    printf("SIGINT %d signal received. Stopping client...\n", signum);
+    printf("SIGINT %d signal received. Stopping client...\n\n", signum);
     client.stop();
 }
 

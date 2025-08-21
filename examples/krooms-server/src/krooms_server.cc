@@ -21,7 +21,7 @@ int KRoomServer::senderLoop() {
                 std::string tstr = std::asctime(std::localtime(&timestamp));
                 tstr.back() = 0;
                 printf("[%s]Sending message: %s\n", tstr.c_str(), currentMessage.c_str());
-                ggWave->init(currentMessage.c_str(), GGWave::TxProtocolId(protocalId), 10);
+                ggWave->init(currentMessage.c_str(), GGWave::TxProtocolId(protocalId), 50);
             }
         }
 
