@@ -1,0 +1,15 @@
+{
+  "main": "lib/binding.js",
+  "dependencies": {
+    "node-addon-api": "^8.5.0"
+  },
+  "scripts": {
+    "test": "node --napi-modules ./test/test_binding.js"
+  },
+  "gypfile": true,
+  "name": "krooms-client",
+  "version": "1.0.0",
+  "author": "kangning",
+  "license": "ISC",
+  "description": ""
+}

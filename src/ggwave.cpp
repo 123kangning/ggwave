@@ -818,6 +818,7 @@ uint32_t GGWave::encode() {
     {
         int frameId = 0;
         bool hasData = m_tx.hasData;
+        // printf("encode 0 hasData = %d\n", hasData);
 
         m_tx.nTones = 0;
         while (hasData) {
@@ -915,6 +916,7 @@ uint32_t GGWave::encode() {
     uint32_t offset = 0;
     const float factor = m_sampleRate/m_sampleRateOut;
 
+    // printf("encode 1 hasData = %d\n", m_tx.hasData);
     while (m_tx.hasData) {
         m_tx.output.zero();
 
@@ -1732,7 +1734,7 @@ void GGWave::decode_variable() {
                             }
 
                             ggprintf("Decoded length = %d, protocol = '%s' (%d)\n", decodedLength, protocol.name, protocolId);
-                            ggprintf("Received sound data successfully: '%s'\n", m_rx.data.data());
+                            //ggprintf("Received sound data successfully: '%s'\n", m_rx.data.data());
 
                             isValid = true;
                             m_rx.hasNewRxData = true;
@@ -2028,7 +2030,7 @@ void GGWave::decode_fixed() {
                 }
 
                 ggprintf("Decoded length = %d, protocol = '%s' (%d)\n", m_payloadLength, protocol.name, protocolId);
-                ggprintf("Received sound data successfully: '%s'\n", m_rx.data.data());
+                //ggprintf("Received sound data successfully: '%s'\n", m_rx.data.data());
 
                 isValid = true;
                 m_rx.hasNewRxData = true;

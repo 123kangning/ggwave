@@ -27,10 +27,10 @@ int main(int argc, char** argv) {
     const int  playbackId    = argm.count("p") == 0 ?  0 : std::stoi(argm.at("p"));
     const int  txProtocolId  = argm.count("t") == 0 ?  1 : std::stoi(argm.at("t"));
     const int  payloadLength = argm.count("l") == 0 ? -1 : std::stoi(argm.at("l"));
-    const bool useDSS        = argm.count("d") >  0;
+    // const bool useDSS        = argm.count("d") >  0;
     const bool printTones    = argm.count("v") >  0;
 
-    if (GGWave_init(playbackId, captureId, payloadLength, 0.0f, useDSS) == false) {
+    if (GGWave_init(playbackId, captureId, payloadLength, 0.0f, true) == false) {
         fprintf(stderr, "Failed to initialize GGWave\n");
         return -1;
     }

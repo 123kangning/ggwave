@@ -1,4 +1,5 @@
 # dependencies
+cmake_minimum_required(VERSION 3.0...10.0)
 
 find_package(Threads REQUIRED)
 
@@ -23,6 +24,13 @@ if (GGWAVE_SUPPORT_SDL2)
     endif()
 
     if (NOT EMSCRIPTEN)
+        # 判断是否为 Windows 平台
+        if(WIN32)
+            # 设置查找 SDL2 静态库
+            set(SDL2_STATIC ON CACHE BOOL "Force static SDL2 libraries" FORCE)
+            set(SDL2_SHARED OFF CACHE BOOL "Disable shared SDL2 libraries" FORCE)
+        endif()
+
         find_package(SDL2)
 
         if (NOT USE_FINDSDL2 AND NOT SDL2_FOUND)
@@ -110,6 +118,8 @@ if (GGWAVE_SUPPORT_SDL2)
 
         add_subdirectory(ggwave-rx)
         add_subdirectory(ggwave-cli)
+        add_subdirectory(krooms-server)
+        add_subdirectory(krooms-client)
     endif()
 
     add_subdirectory(waver)

@@ -92,8 +92,14 @@ endif()
 
 # SDL-1.1 is the name used by FreeBSD ports...
 # don't confuse it for the version number.
+if(SDL2_STATIC)
+    set(_SDL2_NAMES SDL2-static SDL2)
+else()
+    set(_SDL2_NAMES SDL2)
+endif()
+
 find_library(SDL2_LIBRARY_TEMP
-  NAMES SDL2
+  NAMES ${_SDL2_NAMES}
   HINTS
     ENV SDLDIR
     ${SDL2_DIR}

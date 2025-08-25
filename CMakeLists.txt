@@ -169,3 +169,7 @@ add_custom_command(TARGET deb
     COMMENT "SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}"
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
+
+if (WIN32)
+    set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries" FORCE)
+endif()

@@ -148,8 +148,10 @@ Other projects using **ggwave** or one of its prototypes:
 
 ```bash
 # build
-git clone https://github.com/123kangning/ggwave --recursive
-cd ggwave && mkdir build && cd build
+git clone https://github.com/123kangning/ggwave.git --recursive
+cd ggwave
+npm install
+mkdir build && cd build
 cmake ..
 make
 
