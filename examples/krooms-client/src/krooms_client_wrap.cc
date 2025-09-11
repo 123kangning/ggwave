@@ -3,6 +3,8 @@
 using namespace Napi;
 
 KroomsClientWrapper::KroomsClientWrapper(const Napi::CallbackInfo & info) : ObjectWrap(info) {
+    // 初始化 ThreadSafeFunction 为空
+    this->tsfn = nullptr;
 }
 
 Napi::Value KroomsClientWrapper::Greet(const Napi::CallbackInfo & info) {
@@ -40,18 +42,60 @@ Napi::Value KroomsClientWrapper::Start(const Napi::CallbackInfo & info) {
 
     Napi::Function jsCallback = info[0].As<Napi::Function>();
 
-    // 保存回调函数和线程安全的引用
-    auto callback = [env = Napi::Env(info.Env()),
-                     callbackRef = Napi::ThreadSafeFunction::New(env, jsCallback, "KRoomClientCallback", 0, 1)](const std::string & data) {
-        callbackRef.BlockingCall([data](Napi::Env env, Napi::Function jsCallback) { jsCallback.Call({Napi::String::New(env, data)}); });
+    // 创建 ThreadSafeFunction 并保存为成员变量
+    this->tsfn = Napi::ThreadSafeFunction::New(
+        env,
+        jsCallback,
+        "KRoomClientCallback",
+        0,  // 无限制队列大小
+        1   // 只有一个线程会调用
+    );
+
+    // 创建回调函数
+    auto callback = [this](const std::string & data) {
+        if (this->tsfn) {
+            printf("C++ callback called with data: %s\n", data.c_str()); // 调试输出
+            
+            auto status = this->tsfn.BlockingCall([data](Napi::Env env, Napi::Function jsCallback) {
+                printf("Calling JavaScript callback with data: %s\n", data.c_str()); // 调试输出
+                jsCallback.Call({Napi::String::New(env, data)});
+            });
+            
+            if (status != napi_ok) {
+                printf("ThreadSafeFunction call failed with status: %d\n", status);
+            }
+        } else {
+            printf("ThreadSafeFunction is null!\n");
+        }
     };
 
-    int ret = client.start(callback);
-    return Napi::Number::New(env, ret);
+    // 在新线程中启动客户端，避免阻塞主线程
+    this->clientThread = std::thread([this, callback]() {
+        printf("Starting client in background thread...\n");
+        this->client.start(callback);
+    });
+
+    return Napi::Number::New(env, 0);
 }
 Napi::Value KroomsClientWrapper::Stop(const Napi::CallbackInfo & info) {
     Napi::Env env = info.Env();
+    
+    printf("Stopping client...\n");
     client.stop();
+    
+    // 等待线程结束
+    if (this->clientThread.joinable()) {
+        printf("Waiting for client thread to finish...\n");
+        this->clientThread.join();
+    }
+    
+    // 清理 ThreadSafeFunction
+    if (this->tsfn) {
+        printf("Releasing ThreadSafeFunction...\n");
+        this->tsfn.Release();
+        this->tsfn = nullptr;
+    }
+    
     return Napi::Number::New(env, 0);
 }
 

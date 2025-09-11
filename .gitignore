@@ -10,3 +10,4 @@ compile_commands.json
 .DS_Store
 .idea
 /**/node_modules
+/**/.kwaipilot/**

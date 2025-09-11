@@ -49,9 +49,8 @@ execute_process(
 
 # 2. 配置子项目源文件（原有代码 + Node-API 包装代码）
 set(SOURCES
-    # src/krooms_server_wrap.cc # Node-API 包装代码
-    src/krooms_server.cc # Node-API 扩展入口（必须）
-    src/main.cpp # 子项目原有 C++ 逻辑（复用）
+    src/krooms_server_wrap.cc # Node-API 包装代码
+    src/krooms_server.cc # 核心 C++ 逻辑
 )
 # 3. 生成 Node 扩展（本质是共享库，强制 .node 扩展名）
 # --------------------------
@@ -60,16 +59,49 @@ set_target_properties(krooms-server-lib PROPERTIES
     PREFIX "" # 移除 lib 前缀
     SUFFIX ".node" # 强制 .node 扩展名（Node 要求）
     CXX_STANDARD 17 # 匹配 Node-API 要求的 C++ 标准
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib # 设置输出目录到 build/lib
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib # 设置运行时输出目录
 )
-# 4. 链接 Node-API 和子项目依赖
+# 4. 获取 Node.js 的库路径和链接标志
+execute_process(
+    COMMAND ${NODE_EXECUTABLE} -p "process.execPath"
+    OUTPUT_VARIABLE NODE_EXECUTABLE_PATH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 
+# 获取 Node.js 版本信息
+execute_process(
+    COMMAND ${NODE_EXECUTABLE} -p "process.versions.node"
+    OUTPUT_VARIABLE NODE_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+# 设置 Node.js 相关的编译定义
+add_definitions(-DNAPI_VERSION=8)
+add_definitions(-DNODE_GYP_MODULE_NAME=krooms-server-lib)
+add_definitions(-DUSING_UV_SHARED=1)
+add_definitions(-DUSING_V8_SHARED=1)
+add_definitions(-DV8_DEPRECATION_WARNINGS=1)
+add_definitions(-DV8_DEPRECATION_WARNINGS)
+add_definitions(-DV8_IMMINENT_DEPRECATION_WARNINGS)
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
+
+# 链接 Node-API 和子项目依赖
 target_include_directories(krooms-server-lib
     PRIVATE ${NODE_ADDON_API_DIR} # 用于 napi.h
     PRIVATE ${NODE_INCLUDE_DIR} # 用于 node_api.h
-    PRIVATE src/krooms_server.h # 子项目原有头文件目录
-    ..
-    ${SDL2_INCLUDE_DIRS}
+    PRIVATE src # 子项目原有头文件目录
+    PRIVATE ..
+    PRIVATE ${SDL2_INCLUDE_DIRS}
 )
+
+# 设置 macOS 特定的链接选项
+if(APPLE)
+    set_target_properties(krooms-server-lib PROPERTIES
+        LINK_FLAGS "-undefined dynamic_lookup"
+    )
+endif()
+
 message(STATUS "NODE_ADDON_API_DIR: ${NODE_ADDON_API_DIR}")
 message(STATUS "NODE_INCLUDE_DIR: ${NODE_INCLUDE_DIR}")
 target_link_libraries(krooms-server-lib PRIVATE
@@ -77,22 +109,18 @@ target_link_libraries(krooms-server-lib PRIVATE
     ggwave-common
     ggwave-common-sdl2
     ${CMAKE_THREAD_LIBS_INIT}
-    # ${CMAKE_JS_LIB}
-    # ${NODEJS_LIBRARIES}
 )
 
 
 add_executable(krooms-server
-   src/krooms_server.cc
+    src/krooms_server.cc
     src/main.cpp
 )
 
 target_include_directories(krooms-server PRIVATE
-PRIVATE ${NODE_ADDON_API_DIR} # 用于 napi.h
-    PRIVATE ${NODE_INCLUDE_DIR} # 用于 node_api.h
-    PRIVATE src/krooms_server.h # 子项目原有头文件目录
-    ..
-    ${SDL2_INCLUDE_DIRS}
+    PRIVATE src # 头文件目录
+    PRIVATE ..
+    PRIVATE ${SDL2_INCLUDE_DIRS}
 )
 
 target_link_libraries(krooms-server PRIVATE
@@ -100,43 +128,5 @@ target_link_libraries(krooms-server PRIVATE
     ggwave-common
     ggwave-common-sdl2
     ${CMAKE_THREAD_LIBS_INIT}
-    # ${CMAKE_JS_LIB}
-    # ${NODEJS_LIBRARIES}
 )
-# string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
-# message(STATUS "最终NAPI路径: ${NODE_ADDON_API_DIR}")
-# message(STATUS "CMAKE_JS_INC: ${CMAKE_JS_INC}")
 
-
-# include_directories(
-#     # ${CMAKE_JS_INC}
-#     "${NODE_ADDON_API_DIR}"
-# )
-# file(GLOB SOURCE_FILES "./src/krooms_server.cc" "./src/main.cpp")
-# add_library(krooms-server-lib SHARED
-#     ${SOURCE_FILES} ${CMAKE_JS_SRC}
-#     ./src/krooms_server.h
-#     ./src/krooms_server.cc
-#     ./src/main.cpp
-# )
-# target_link_libraries(krooms-server-lib PRIVATE
-#     ggwave
-#     ggwave-common
-#     ggwave-common-sdl2
-#     ${CMAKE_THREAD_LIBS_INIT}
-#     ${CMAKE_JS_LIB}
-#     # ${NODEJS_LIBRARIES}
-# )
-# target_include_directories(krooms-server-lib PRIVATE
-#     ..
-#     ${SDL2_INCLUDE_DIRS}
-#     ${NODE_ADDON_API_DIR}
-#     # ${NODEJS_INCLUDE_DIRS}
-# )
-# set_target_properties(krooms-server PROPERTIES PREFIX "" SUFFIX ".node")
-# # string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
-# # string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
-# # target_link_libraries(krooms-server ${CMAKE_JS_LIB})
-
-# # define NAPI_VERSION
-# add_definitions(-DNAPI_VERSION=3)

@@ -49,9 +49,8 @@ execute_process(
 
 # 2. 配置子项目源文件（原有代码 + Node-API 包装代码）
 set(SOURCES
-    # src/krooms_client_wrap.cc # Node-API 包装代码
-    src/krooms_client.cc # Node-API 扩展入口（必须）
-    src/main.cpp # 子项目原有 C++ 逻辑（复用）
+    src/krooms_client_wrap.cc # Node-API 包装代码
+    src/krooms_client.cc # 核心 C++ 逻辑
 )
 # 3. 生成 Node 扩展（本质是共享库，强制 .node 扩展名）
 # --------------------------
@@ -60,46 +59,71 @@ set_target_properties(krooms-client-lib PROPERTIES
     PREFIX "" # 移除 lib 前缀
     SUFFIX ".node" # 强制 .node 扩展名（Node 要求）
     CXX_STANDARD 17 # 匹配 Node-API 要求的 C++ 标准
+    LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib # 设置输出目录到 build/lib
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib # 设置运行时输出目录
 )
-# 4. 链接 Node-API 和子项目依赖
+# 4. 获取 Node.js 的库路径和链接标志
+execute_process(
+    COMMAND ${NODE_EXECUTABLE} -p "process.execPath"
+    OUTPUT_VARIABLE NODE_EXECUTABLE_PATH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
 
+# 获取 Node.js 版本信息
+execute_process(
+    COMMAND ${NODE_EXECUTABLE} -p "process.versions.node"
+    OUTPUT_VARIABLE NODE_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+# 设置 Node.js 相关的编译定义
+add_definitions(-DNAPI_VERSION=8)
+add_definitions(-DNODE_GYP_MODULE_NAME=krooms-client-lib)
+add_definitions(-DUSING_UV_SHARED=1)
+add_definitions(-DUSING_V8_SHARED=1)
+add_definitions(-DV8_DEPRECATION_WARNINGS=1)
+add_definitions(-DV8_DEPRECATION_WARNINGS)
+add_definitions(-DV8_IMMINENT_DEPRECATION_WARNINGS)
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
+
+# 链接 Node-API 和子项目依赖
 target_include_directories(krooms-client-lib
     PRIVATE ${NODE_ADDON_API_DIR} # 用于 napi.h
     PRIVATE ${NODE_INCLUDE_DIR} # 用于 node_api.h
-    PRIVATE src/krooms_client.h # 子项目原有头文件目录
-    ..
-    ${SDL2_INCLUDE_DIRS}
+    PRIVATE src # 子项目原有头文件目录
+    PRIVATE ..
+    PRIVATE ${SDL2_INCLUDE_DIRS}
 )
+
+# 设置 macOS 特定的链接选项
+if(APPLE)
+    set_target_properties(krooms-client-lib PROPERTIES
+        LINK_FLAGS "-undefined dynamic_lookup"
+    )
+endif()
+
 target_link_libraries(krooms-client-lib PRIVATE
     ggwave
     ggwave-common
     ggwave-common-sdl2
-    # node-addon-api
     ${CMAKE_THREAD_LIBS_INIT}
-    # ${CMAKE_JS_LIB}
-    # ${NODEJS_LIBRARIES}
 )
 
 
 add_executable(krooms-client
-   src/krooms_client.cc
+    src/krooms_client.cc
     src/main.cpp
 )
 
 target_include_directories(krooms-client PRIVATE
-PRIVATE ${NODE_ADDON_API_DIR} # 用于 napi.h
-    PRIVATE ${NODE_INCLUDE_DIR} # 用于 node_api.h
-    PRIVATE src/krooms_client.h # 子项目原有头文件目录
-    ..
-    ${SDL2_INCLUDE_DIRS}
+    PRIVATE src # 头文件目录
+    PRIVATE ..
+    PRIVATE ${SDL2_INCLUDE_DIRS}
 )
 
 target_link_libraries(krooms-client PRIVATE
     ggwave
     ggwave-common
     ggwave-common-sdl2
-    # node-addon-api
     ${CMAKE_THREAD_LIBS_INIT}
-    # ${CMAKE_JS_LIB}
-    # ${NODEJS_LIBRARIES}
 )
