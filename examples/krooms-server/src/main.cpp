@@ -1,4 +1,4 @@
-#include "krooms_server.h"
+#include "krooms_server_core.h"
 
 KRoomServer server;
 bool g_running = true;

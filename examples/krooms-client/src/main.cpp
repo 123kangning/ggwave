@@ -1,4 +1,4 @@
-#include "krooms_client.h"
+#include "krooms_client_core.h"
 
 KRoomClient client;
 

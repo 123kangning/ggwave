@@ -1,4 +1,4 @@
-#include "krooms_server.h"
+#include "krooms_server_core.h"
 
 KRoomServer::KRoomServer() {
     this->running = true;
@@ -33,7 +33,7 @@ int KRoomServer::senderLoop() {
 }
 int KRoomServer::start(const std::string & msg) {
     this->running = true;
-    currentMessage = msg;
+    this->currentMessage = msg;
     // 初始化音频系统
     if (GGWave_init(0, 0, -1, 0.0f, false) == false) {
         fprintf(stderr, "Failed to initialize GGWave\n");

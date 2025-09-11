@@ -1,6 +1,4 @@
-#include "krooms_client.h"
-
-using namespace Napi;
+#include "krooms_client_core.h"
 KRoomClient::KRoomClient() {
     this->running = true;
     this->dataCallback = nullptr;
