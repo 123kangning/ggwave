@@ -13,10 +13,7 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     include(cmake/BuildTypes.cmake)
 
     # configure project version
-    configure_file(${CMAKE_SOURCE_DIR}/README-tmpl.md                        ${CMAKE_SOURCE_DIR}/README.md @ONLY)
-    configure_file(${CMAKE_SOURCE_DIR}/bindings/python/setup-tmpl.py         ${CMAKE_SOURCE_DIR}/bindings/python/setup.py @ONLY)
-    configure_file(${CMAKE_SOURCE_DIR}/bindings/javascript/package-tmpl.json ${CMAKE_SOURCE_DIR}/bindings/javascript/package.json @ONLY)
-    configure_file(${CMAKE_SOURCE_DIR}/bindings/ios/Makefile-tmpl            ${CMAKE_SOURCE_DIR}/bindings/ios/Makefile @ONLY)
+    configure_file(${CMAKE_SOURCE_DIR}/README-tmpl.md ${CMAKE_SOURCE_DIR}/README.md @ONLY)
 else()
     set(GGWAVE_STANDALONE OFF)
 endif()
@@ -48,10 +45,7 @@ option(GGWAVE_SANITIZE_ADDRESS        "ggwave: enable address sanitizer" OFF)
 option(GGWAVE_SANITIZE_UNDEFINED      "ggwave: enable undefined sanitizer" OFF)
 
 option(GGWAVE_SUPPORT_SDL2            "ggwave: support for libSDL2" ${GGWAVE_SUPPORT_SDL2_DEFAULT})
-option(GGWAVE_SUPPORT_PYTHON          "ggwave: support for python" OFF)
-option(GGWAVE_SUPPORT_SWIFT           "ggwave: support for swift" OFF)
 
-option(GGWAVE_BUILD_TESTS             "ggwave: build examples" ${GGWAVE_STANDALONE})
 option(GGWAVE_BUILD_EXAMPLES          "ggwave: build examples" ${GGWAVE_STANDALONE})
 
 # sanitizers
@@ -88,18 +82,10 @@ if (GGWAVE_ALL_WARNINGS)
 endif()
 
 add_subdirectory(src)
-add_subdirectory(bindings)
-
-if (GGWAVE_BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
-endif()
 
 if (GGWAVE_BUILD_EXAMPLES)
     add_subdirectory(examples)
 endif()
-
-
 
 set(CPACK_COMPONENTS_GROUPING ALL_COMPONENTS_IN_ONE)
 set(CPACK_DEB_COMPONENT_INSTALL YES)
@@ -123,52 +109,6 @@ set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_STRIP_FILES YES)
 set(CPACK_VERBATIM_VARIABLES YES)
 include(CPack)
-
-set(DEB_PYTHON_BUILD_DIR "${CMAKE_SOURCE_DIR}/bindings/python/")
-set(DEB_PYTHON_OUTPUT_FILE_PREFIX "${DEB_PYTHON_BUILD_DIR}/dist")
-
-set(ENV{SOURCE_DATE_EPOCH} "0")
-execute_process(
-  COMMAND git log -1 --pretty=%ct
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-  TIMEOUT 1
-  OUTPUT_VARIABLE SOURCE_DATE_EPOCH
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
-set(ENV{SOURCE_DATE_EPOCH} ${SOURCE_DATE_EPOCH})
-
-add_custom_target(deb_python_binding
-    COMMAND cd ${DEB_PYTHON_BUILD_DIR} && make deb
-    COMMENT "Building Debian package for Python binding"
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-)
-
-add_custom_target(deb_c_library
-    COMMAND SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH} cpack 
-    COMMENT "Building Debian package for C library"
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-)
-
-add_custom_target(deb_python_move
-    COMMAND mv ${DEB_PYTHON_OUTPUT_FILE_PREFIX}/*.deb ${CPACK_OUTPUT_FILE_PREFIX}/
-    COMMENT "Moving Debian package for Python binding into ${CPACK_OUTPUT_FILE_PREFIX}/"
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    DEPENDS deb_python_binding deb_c_library
-)
-
-add_custom_target(deb
-    COMMAND sha256sum ${CPACK_OUTPUT_FILE_PREFIX}/* 
-    COMMENT "Debian package sha256 hashes"
-    DEPENDS deb_c_library deb_python_binding deb_python_move
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-)
-
-add_custom_command(TARGET deb
-    POST_BUILD
-    COMMAND ls -alh ${CPACK_OUTPUT_FILE_PREFIX}/* 
-    COMMENT "SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH}"
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-)
 
 if (WIN32)
     set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared libraries" FORCE)
