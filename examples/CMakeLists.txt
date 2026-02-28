@@ -90,8 +90,8 @@ if (GGWAVE_SUPPORT_SDL2)
     else()
         # non-emscripten sdl2 examples
 
-        add_subdirectory(krooms-server)
-        add_subdirectory(krooms-client)
+        add_subdirectory(krooms-send)
+        add_subdirectory(krooms-receive)
     endif()
 endif()
 

@@ -1,9 +1,9 @@
-#include "krooms_server_core.h"
+#include "krooms_send_core.h"
 
-KRoomServer::KRoomServer() {
+KRoomSend::KRoomSend() {
     this->running = true;
 }
-int KRoomServer::senderLoop() {
+int KRoomSend::senderLoop() {
     // GGWave_init(0, 0, -1, 0.0f, true);
     auto ggWave = GGWave_instance();
     int protocalId = GGWAVE_PROTOCOL_AUDIBLE_FAST;
@@ -31,7 +31,7 @@ int KRoomServer::senderLoop() {
     }
     return 0;
 }
-int KRoomServer::start(const std::string & msg) {
+int KRoomSend::start(const std::string & msg) {
     this->running = true;
     this->currentMessage = msg;
     // 初始化音频系统
@@ -39,7 +39,7 @@ int KRoomServer::start(const std::string & msg) {
         fprintf(stderr, "Failed to initialize GGWave\n");
         return -1;
     }
-    senderThread = std::thread(&KRoomServer::senderLoop, this);
+    senderThread = std::thread(&KRoomSend::senderLoop, this);
     while (running) {
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
         {
@@ -50,19 +50,19 @@ int KRoomServer::start(const std::string & msg) {
     return 0;
 }
 
-void KRoomServer::disableSend() {
+void KRoomSend::disableSend() {
     sendEnabled = false;
 }
-void KRoomServer::enableSend() {
+void KRoomSend::enableSend() {
     sendEnabled = true;
 }
-void KRoomServer::stop() {
+void KRoomSend::stop() {
     this->running = false;
     GGWave_deinit();
     if (senderThread.joinable())
         senderThread.join();
 }
 
-void KRoomServer::updateMessage(const std::string & msg) {
+void KRoomSend::updateMessage(const std::string & msg) {
     currentMessage = msg;
 }

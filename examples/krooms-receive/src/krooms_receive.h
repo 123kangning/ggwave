@@ -2,12 +2,11 @@
 
 #include <napi.h>
 #include <thread>
-#include "krooms_client_core.h"
+#include "krooms_receive_core.h"
 
-class KroomsClientWrapper : public Napi::ObjectWrap<KroomsClientWrapper> {
+class KroomsReceiveWrapper : public Napi::ObjectWrap<KroomsReceiveWrapper> {
    public:
-    // KRoomServerWrapper();
-    KroomsClientWrapper(const Napi::CallbackInfo & info);
+    KroomsReceiveWrapper(const Napi::CallbackInfo & info);
     Napi::Value Greet(const Napi::CallbackInfo &);
     Napi::Value Start(const Napi::CallbackInfo & info);
     Napi::Value Stop(const Napi::CallbackInfo & info);
@@ -18,7 +17,7 @@ class KroomsClientWrapper : public Napi::ObjectWrap<KroomsClientWrapper> {
    private:
     int check(const Napi::CallbackInfo & info); 
     std::string _greeterName;
-    KRoomClient client;
+    KRoomReceive client;
     Napi::ThreadSafeFunction tsfn;
     std::thread clientThread;
 };

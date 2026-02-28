@@ -3,15 +3,14 @@
 #include <napi.h>
 #include <thread>
 #include <memory>
-#include "krooms_server_core.h"
+#include "krooms_send_core.h"
 
 using namespace Napi;
 
 
-class KRoomServerWrapper : public Napi::ObjectWrap<KRoomServerWrapper> {
+class KRoomSendWrapper : public Napi::ObjectWrap<KRoomSendWrapper> {
    public:
-    // KRoomServerWrapper();
-    KRoomServerWrapper(const Napi::CallbackInfo & info);
+    KRoomSendWrapper(const Napi::CallbackInfo & info);
     Napi::Value Greet(const Napi::CallbackInfo &);
     Napi::Value Start(const Napi::CallbackInfo & info);
     Napi::Value Stop(const Napi::CallbackInfo & info);
@@ -22,6 +21,6 @@ class KRoomServerWrapper : public Napi::ObjectWrap<KRoomServerWrapper> {
    private:
     int check(const Napi::CallbackInfo & info); 
     std::string _greeterName;
-    KRoomServer server;
-    std::unique_ptr<std::thread> serverThread;
+    KRoomSend sender;
+    std::unique_ptr<std::thread> senderThread;
 };

@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0...10.0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
-project(krooms-server)
+project(krooms-send)
 
 # find_package(NodeJS REQUIRED)
 
@@ -49,13 +49,13 @@ execute_process(
 
 # 2. 配置子项目源文件（原有代码 + Node-API 包装代码）
 set(SOURCES
-    src/krooms_server_wrap.cc # Node-API 包装代码
-    src/krooms_server.cc # 核心 C++ 逻辑
+    src/krooms_send_wrap.cc # Node-API 包装代码
+    src/krooms_send.cc # 核心 C++ 逻辑
 )
 # 3. 生成 Node 扩展（本质是共享库，强制 .node 扩展名）
 # --------------------------
-add_library(krooms-server-lib SHARED ${SOURCES})
-set_target_properties(krooms-server-lib PROPERTIES
+add_library(krooms-send-lib SHARED ${SOURCES})
+set_target_properties(krooms-send-lib PROPERTIES
     PREFIX "" # 移除 lib 前缀
     SUFFIX ".node" # 强制 .node 扩展名（Node 要求）
     CXX_STANDARD 17 # 匹配 Node-API 要求的 C++ 标准
@@ -78,7 +78,7 @@ execute_process(
 
 # 设置 Node.js 相关的编译定义
 add_definitions(-DNAPI_VERSION=8)
-add_definitions(-DNODE_GYP_MODULE_NAME=krooms-server-lib)
+add_definitions(-DNODE_GYP_MODULE_NAME=krooms-send-lib)
 add_definitions(-DUSING_UV_SHARED=1)
 add_definitions(-DUSING_V8_SHARED=1)
 add_definitions(-DV8_DEPRECATION_WARNINGS=1)
@@ -87,7 +87,7 @@ add_definitions(-DV8_IMMINENT_DEPRECATION_WARNINGS)
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
 
 # 链接 Node-API 和子项目依赖
-target_include_directories(krooms-server-lib
+target_include_directories(krooms-send-lib
     PRIVATE ${NODE_ADDON_API_DIR} # 用于 napi.h
     PRIVATE ${NODE_INCLUDE_DIR} # 用于 node_api.h
     PRIVATE src # 子项目原有头文件目录
@@ -97,14 +97,14 @@ target_include_directories(krooms-server-lib
 
 # 设置 macOS 特定的链接选项
 if(APPLE)
-    set_target_properties(krooms-server-lib PROPERTIES
+    set_target_properties(krooms-send-lib PROPERTIES
         LINK_FLAGS "-undefined dynamic_lookup"
     )
 endif()
 
 message(STATUS "NODE_ADDON_API_DIR: ${NODE_ADDON_API_DIR}")
 message(STATUS "NODE_INCLUDE_DIR: ${NODE_INCLUDE_DIR}")
-target_link_libraries(krooms-server-lib PRIVATE
+target_link_libraries(krooms-send-lib PRIVATE
     ggwave
     ggwave-common
     ggwave-common-sdl2
@@ -112,18 +112,18 @@ target_link_libraries(krooms-server-lib PRIVATE
 )
 
 
-add_executable(krooms-server
-    src/krooms_server.cc
+add_executable(krooms-send
+    src/krooms_send.cc
     src/main.cpp
 )
 
-target_include_directories(krooms-server PRIVATE
+target_include_directories(krooms-send PRIVATE
     PRIVATE src # 头文件目录
     PRIVATE ..
     PRIVATE ${SDL2_INCLUDE_DIRS}
 )
 
-target_link_libraries(krooms-server PRIVATE
+target_link_libraries(krooms-send PRIVATE
     ggwave
     ggwave-common
     ggwave-common-sdl2

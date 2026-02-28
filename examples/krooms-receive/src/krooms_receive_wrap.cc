@@ -1,13 +1,13 @@
-#include "krooms_client.h"
+#include "krooms_receive.h"
 
 using namespace Napi;
 
-KroomsClientWrapper::KroomsClientWrapper(const Napi::CallbackInfo & info) : ObjectWrap(info) {
+KroomsReceiveWrapper::KroomsReceiveWrapper(const Napi::CallbackInfo & info) : ObjectWrap(info) {
     // 初始化 ThreadSafeFunction 为空
     this->tsfn = nullptr;
 }
 
-Napi::Value KroomsClientWrapper::Greet(const Napi::CallbackInfo & info) {
+Napi::Value KroomsReceiveWrapper::Greet(const Napi::CallbackInfo & info) {
     Napi::Env env = info.Env();
 
     if (info.Length() < 1) {
@@ -27,7 +27,7 @@ Napi::Value KroomsClientWrapper::Greet(const Napi::CallbackInfo & info) {
 
     return Napi::String::New(env, this->_greeterName);
 }
-Napi::Value KroomsClientWrapper::Start(const Napi::CallbackInfo & info) {
+Napi::Value KroomsReceiveWrapper::Start(const Napi::CallbackInfo & info) {
     Napi::Env env = info.Env();
 
     if (info.Length() < 1) {
@@ -46,7 +46,7 @@ Napi::Value KroomsClientWrapper::Start(const Napi::CallbackInfo & info) {
     this->tsfn = Napi::ThreadSafeFunction::New(
         env,
         jsCallback,
-        "KRoomClientCallback",
+        "KRoomReceiveCallback",
         0,  // 无限制队列大小
         1   // 只有一个线程会调用
     );
@@ -77,7 +77,7 @@ Napi::Value KroomsClientWrapper::Start(const Napi::CallbackInfo & info) {
 
     return Napi::Number::New(env, 0);
 }
-Napi::Value KroomsClientWrapper::Stop(const Napi::CallbackInfo & info) {
+Napi::Value KroomsReceiveWrapper::Stop(const Napi::CallbackInfo & info) {
     Napi::Env env = info.Env();
     
     printf("Stopping client...\n");
@@ -99,16 +99,16 @@ Napi::Value KroomsClientWrapper::Stop(const Napi::CallbackInfo & info) {
     return Napi::Number::New(env, 0);
 }
 
-Napi::Function KroomsClientWrapper::GetClass(Napi::Env env) {
-    return DefineClass(env, "KroomsClientWrapper",
+Napi::Function KroomsReceiveWrapper::GetClass(Napi::Env env) {
+    return DefineClass(env, "KroomsReceiveWrapper",
                        {
-                           KroomsClientWrapper::InstanceMethod("greet", &KroomsClientWrapper::Greet),
-                           KroomsClientWrapper::InstanceMethod("start", &KroomsClientWrapper::Start),
-                           KroomsClientWrapper::InstanceMethod("stop", &KroomsClientWrapper::Stop),
+                           KroomsReceiveWrapper::InstanceMethod("greet", &KroomsReceiveWrapper::Greet),
+                           KroomsReceiveWrapper::InstanceMethod("start", &KroomsReceiveWrapper::Start),
+                           KroomsReceiveWrapper::InstanceMethod("stop", &KroomsReceiveWrapper::Stop),
                        });
 }
 
-int KroomsClientWrapper::check(const Napi::CallbackInfo & info) {
+int KroomsReceiveWrapper::check(const Napi::CallbackInfo & info) {
     Napi::Env env = info.Env();
 
     if (info.Length() < 1) {
@@ -124,8 +124,8 @@ int KroomsClientWrapper::check(const Napi::CallbackInfo & info) {
 }
 
 Napi::Object Init(Napi::Env env, Napi::Object exports) {
-    Napi::String name = Napi::String::New(env, "KroomsClientWrapper");
-    exports.Set(name, KroomsClientWrapper::GetClass(env));
+    Napi::String name = Napi::String::New(env, "KroomsReceiveWrapper");
+    exports.Set(name, KroomsReceiveWrapper::GetClass(env));
     return exports;
 }
 

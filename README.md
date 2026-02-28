@@ -105,7 +105,6 @@ The [examples](https://github.com/ggerganov/ggwave/blob/master/examples/) folder
 | ------- | ----------- | ----- |
 | [ggtag](https://github.com/rgerganov/ggtag) | Sound-programmable e-paper badge | PDM mic |
 | [ggwave-rx](https://github.com/ggerganov/ggwave/blob/master/examples/ggwave-rx) | Very basic receive-only program | SDL |
-| [ggwave-cli](https://github.com/ggerganov/ggwave/blob/master/examples/ggwave-cli) | Command line tool for sending/receiving data through sound | SDL |
 | [ggwave-wasm](https://github.com/ggerganov/ggwave/blob/master/examples/ggwave-wasm) | WebAssembly module for web applications | SDL |
 | [ggwave-to-file](https://github.com/ggerganov/ggwave/blob/master/examples/ggwave-to-file) | Output a generated waveform to an uncompressed WAV file | - |
 | [ggwave-from-file](https://github.com/ggerganov/ggwave/blob/master/examples/ggwave-from-file) | Decode a waveform from an uncompressed WAV file | - |
@@ -156,7 +155,7 @@ cmake ..
 make
 
 # running
-./bin/ggwave-cli
+# 进入examples/krooms-*中的README，查看运行方式
 ```
 
 #### Local Debian packages

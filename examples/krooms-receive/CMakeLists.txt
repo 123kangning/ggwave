@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0...10.0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 # find_package(node-addon-api REQUIRED)
-project(krooms-client)
+project(krooms-receive)
 
 # find_package(NodeJS REQUIRED)
 
@@ -49,13 +49,13 @@ execute_process(
 
 # 2. 配置子项目源文件（原有代码 + Node-API 包装代码）
 set(SOURCES
-    src/krooms_client_wrap.cc # Node-API 包装代码
-    src/krooms_client.cc # 核心 C++ 逻辑
+    src/krooms_receive_wrap.cc # Node-API 包装代码
+    src/krooms_receive.cc # 核心 C++ 逻辑
 )
 # 3. 生成 Node 扩展（本质是共享库，强制 .node 扩展名）
 # --------------------------
-add_library(krooms-client-lib SHARED ${SOURCES})
-set_target_properties(krooms-client-lib PROPERTIES
+add_library(krooms-receive-lib SHARED ${SOURCES})
+set_target_properties(krooms-receive-lib PROPERTIES
     PREFIX "" # 移除 lib 前缀
     SUFFIX ".node" # 强制 .node 扩展名（Node 要求）
     CXX_STANDARD 17 # 匹配 Node-API 要求的 C++ 标准
@@ -78,7 +78,7 @@ execute_process(
 
 # 设置 Node.js 相关的编译定义
 add_definitions(-DNAPI_VERSION=8)
-add_definitions(-DNODE_GYP_MODULE_NAME=krooms-client-lib)
+add_definitions(-DNODE_GYP_MODULE_NAME=krooms-receive-lib)
 add_definitions(-DUSING_UV_SHARED=1)
 add_definitions(-DUSING_V8_SHARED=1)
 add_definitions(-DV8_DEPRECATION_WARNINGS=1)
@@ -87,7 +87,7 @@ add_definitions(-DV8_IMMINENT_DEPRECATION_WARNINGS)
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
 
 # 链接 Node-API 和子项目依赖
-target_include_directories(krooms-client-lib
+target_include_directories(krooms-receive-lib
     PRIVATE ${NODE_ADDON_API_DIR} # 用于 napi.h
     PRIVATE ${NODE_INCLUDE_DIR} # 用于 node_api.h
     PRIVATE src # 子项目原有头文件目录
@@ -97,12 +97,12 @@ target_include_directories(krooms-client-lib
 
 # 设置 macOS 特定的链接选项
 if(APPLE)
-    set_target_properties(krooms-client-lib PROPERTIES
+    set_target_properties(krooms-receive-lib PROPERTIES
         LINK_FLAGS "-undefined dynamic_lookup"
     )
 endif()
 
-target_link_libraries(krooms-client-lib PRIVATE
+target_link_libraries(krooms-receive-lib PRIVATE
     ggwave
     ggwave-common
     ggwave-common-sdl2
@@ -110,18 +110,18 @@ target_link_libraries(krooms-client-lib PRIVATE
 )
 
 
-add_executable(krooms-client
-    src/krooms_client.cc
+add_executable(krooms-receive
+    src/krooms_receive.cc
     src/main.cpp
 )
 
-target_include_directories(krooms-client PRIVATE
+target_include_directories(krooms-receive PRIVATE
     PRIVATE src # 头文件目录
     PRIVATE ..
     PRIVATE ${SDL2_INCLUDE_DIRS}
 )
 
-target_link_libraries(krooms-client PRIVATE
+target_link_libraries(krooms-receive PRIVATE
     ggwave
     ggwave-common
     ggwave-common-sdl2

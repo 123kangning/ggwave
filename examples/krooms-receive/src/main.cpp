@@ -1,10 +1,10 @@
-#include "krooms_client_core.h"
+#include "krooms_receive_core.h"
 
-KRoomClient client;
+KRoomReceive receiver;
 
 void signalHandler(int signum) {
-    printf("SIGINT %d signal received. Stopping client...\n\n", signum);
-    client.stop();
+    printf("SIGINT %d signal received. Stopping receiver...\n\n", signum);
+    receiver.stop();
 }
 
 int main() {
@@ -16,6 +16,6 @@ int main() {
         printf("[%s] Received: '%s'\n", tstr.c_str(), data.c_str());
     };
     // 启动并注册回调函数
-    client.start(call);
+    receiver.start(call);
     return 0;
 }

@@ -11,9 +11,9 @@ if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
     set(GGWAVE_STANDALONE ON)
     include(cmake/GitVars.cmake)
     include(cmake/BuildTypes.cmake)
-
+    
     # configure project version
-    configure_file(${CMAKE_SOURCE_DIR}/README-tmpl.md ${CMAKE_SOURCE_DIR}/README.md @ONLY)
+    # configure_file(${CMAKE_SOURCE_DIR}/README-tmpl.md ${CMAKE_SOURCE_DIR}/README.md @ONLY)
 else()
     set(GGWAVE_STANDALONE OFF)
 endif()

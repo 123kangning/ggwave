@@ -1,10 +1,10 @@
 // 加载从 build/lib 目录下的 .node 文件
 const path = require('path');
-const addon = require(path.join(__dirname, '../../../build/lib/krooms-client-lib.node'));
+const addon = require(path.join(__dirname, '../../../build/lib/krooms-receive-lib.node'));
 
-class KroomsClient {
+class KroomsReceive {
     constructor(name = 'default-client') {
-        this._addonInstance = new addon.KroomsClientWrapper(name);
+        this._addonInstance = new addon.KroomsReceiveWrapper(name);
     }
 
     greet(str) {
@@ -20,4 +20,4 @@ class KroomsClient {
     }
 }
 
-module.exports = KroomsClient;
+module.exports = KroomsReceive;

@@ -1,10 +1,10 @@
-#include "krooms_client_core.h"
-KRoomClient::KRoomClient() {
+#include "krooms_receive_core.h"
+KRoomReceive::KRoomReceive() {
     this->running = true;
     this->dataCallback = nullptr;
 }
 
-int KRoomClient::start(std::function<void(const std::string &)> callback) {
+int KRoomReceive::start(std::function<void(const std::string &)> callback) {
     this->dataCallback = callback;
     this->running = true;
     // 初始化音频设备
@@ -37,11 +37,8 @@ int KRoomClient::start(std::function<void(const std::string &)> callback) {
 
     return 0;
 }
-// void receiveLoop() {
 
-// }
-
-void KRoomClient::stop() {
+void KRoomReceive::stop() {
     this->running = false;
     GGWave_deinit();
 }

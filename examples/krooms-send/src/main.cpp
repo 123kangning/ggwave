@@ -1,16 +1,16 @@
-#include "krooms_server_core.h"
+#include "krooms_send_core.h"
 
-KRoomServer server;
+KRoomSend sender;
 bool g_running = true;
 void signalHandler(int signum) {
     printf("Interrupt signal (%d) received.\n", signum);
     g_running = false;
-    server.stop();
-    printf("Server stopped.\n");
+    sender.stop();
+    printf("Sender stopped.\n");
 }
 
 void updateInterval(int interval) {
-    server.updateMessage("123456-507");  // 设置初始消息
+    sender.updateMessage("123456-507");  // 设置初始消息
     while (g_running) {
         // 模拟每10秒投屏码更新
         std::this_thread::sleep_for(std::chrono::seconds(interval));
@@ -24,7 +24,7 @@ void updateInterval(int interval) {
         int random6 = rand() % 10;
         std::string newMessage = std::to_string(random1) + std::to_string(random2) + std::to_string(random3) + std::to_string(random4) + std::to_string(random5) + std::to_string(random6) + "-507";
         printf("Updating message to: %s\n", newMessage.c_str());
-        server.updateMessage(newMessage);
+        sender.updateMessage(newMessage);
     }
 }
 
@@ -33,8 +33,8 @@ int main() {
 
     // 启动更新线程
     std::thread updateThread(updateInterval, 10);
-    // 启动服务器
-    server.start("123456-507");
+    // 启动发送器
+    sender.start("123456-507");
     updateThread.join();
     return 0;
 }

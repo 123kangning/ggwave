@@ -1,25 +1,8 @@
-const KroomsClient = require("../lib/binding_new.js");
+const KroomsReceive = require("../lib/binding_new.js");
 const assert = require("assert");
 
-console.log("=== KRooms Client Node.js Test ===");
+console.log("=== KRooms Receive Node.js Test ===");
 
-// 测试基本功能
-function testBasic() {
-    console.log("Testing basic functionality...");
-    const client = new KroomsClient("test-client");
-    
-    // 测试 greet 方法
-    assert(client.greet, "The greet method is not defined");
-    console.log("✓ Greet method exists");
-    
-    // 测试 start 方法
-    assert(client.start, "The start method is not defined");
-    console.log("✓ Start method exists");
-    
-    // 测试 stop 方法
-    assert(client.stop, "The stop method is not defined");
-    console.log("✓ Stop method exists");
-}
 
 // 全局变量用于跟踪客户端实例
 let globalClient = null;
@@ -28,7 +11,7 @@ let isRunning = false;
 // 测试音频接收功能（模拟 main.cpp 的逻辑）
 function testAudioReceiving() {
     console.log("\nTesting audio receiving functionality...");
-    globalClient = new KroomsClient("audio-receiver");
+    globalClient = new KroomsReceive("audio-receiver");
     
     // 定义回调函数，类似 main.cpp 中的逻辑
     const dataCallback = (receivedData) => {
@@ -95,16 +78,7 @@ process.on('SIGTERM', () => {
 
 // 运行测试
 try {
-    testBasic();
-    console.log("✓ Basic tests passed");
-    
-    // 如果命令行参数包含 --listen，则启动音频接收测试
-    if (process.argv.includes('--listen')) {
-        testAudioReceiving();
-    } else {
-        console.log("\n✓ All tests passed!");
-        console.log("Run with --listen flag to test audio receiving: node test_client_node.js --listen");
-    }
+    testAudioReceiving();
 } catch (error) {
     console.error("Test failed:", error);
     process.exit(1);

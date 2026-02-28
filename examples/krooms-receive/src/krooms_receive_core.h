@@ -11,10 +11,10 @@
 #include "ggwave-common.h"
 #include "ggwave/ggwave.h"
 
-class KRoomClient
+class KRoomReceive
 {
 public:
-    KRoomClient();
+    KRoomReceive();
     int start(std::function<void(const std::string &)> callback);
     void stop();
 

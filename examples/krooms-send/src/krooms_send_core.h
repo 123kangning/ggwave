@@ -16,7 +16,7 @@
 #include "ggwave-common.h"
 #include "ggwave/ggwave.h"
 
-class KRoomServer {
+class KRoomSend {
     bool running{true};
     std::string currentMessage = "xxx";
     std::thread senderThread;
@@ -25,7 +25,7 @@ class KRoomServer {
 
     int senderLoop();
     public:
-    KRoomServer();
+    KRoomSend();
     int start(const std::string & msg);
     void stop();
     void disableSend();

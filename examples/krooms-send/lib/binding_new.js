@@ -1,16 +1,16 @@
 // 加载从 build/lib 目录下的 .node 文件
 const path = require('path');
-const addon = require(path.join(__dirname, '../../../build/lib/krooms-server-lib.node'));
+const addon = require(path.join(__dirname, '../../../build/lib/krooms-send-lib.node'));
 
-class KroomsServer {
-    constructor(name = 'default-server') {
-        this._addonInstance = new addon.KRoomServerWrapper(name);
+class KroomsSend {
+    constructor(name = 'default-send') {
+        this._addonInstance = new addon.KRoomSendWrapper(name);
         this._running = false;
         this._updateInterval = null;
     }
 
     start(message = "123456-507") {
-        console.log(`Starting server with message: ${message}`);
+        console.log(`Starting send with message: ${message}`);
         this._running = true;
         
         // 现在 start 方法是非阻塞的，在后台线程中运行
@@ -18,14 +18,14 @@ class KroomsServer {
         
         // 给服务器一点时间初始化
         setTimeout(() => {
-            console.log("Server should be running in background thread now");
+            console.log("send should be running in background thread now");
         }, 200);
         
         return result;
     }
 
     stop() {
-        console.log("Stopping server...");
+        console.log("Stopping send...");
         this._running = false;
         
         // 清理定时器
@@ -37,10 +37,10 @@ class KroomsServer {
         
         try {
             const result = this._addonInstance.stop();
-            console.log("Server stopped successfully");
+            console.log("send stopped successfully");
             return result;
         } catch (error) {
-            console.error("Error stopping server:", error);
+            console.error("Error stopping send:", error);
             throw error;
         }
     }
@@ -72,7 +72,7 @@ class KroomsServer {
             console.log(`[UPDATE ${updateCount}] Periodic update triggered (running: ${this._running})`);
             
             if (!this._running) {
-                console.log("Server not running, stopping periodic updates...");
+                console.log("send not running, stopping periodic updates...");
                 clearInterval(this._updateInterval);
                 this._updateInterval = null;
                 return;
@@ -105,4 +105,4 @@ class KroomsServer {
     }
 }
 
-module.exports = KroomsServer;
+module.exports = KroomsSend;
